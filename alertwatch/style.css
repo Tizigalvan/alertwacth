@@ -1,7 +1,7 @@
 body {
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
-    background: #fdfdfd;
+background-color: #ffffff;
     color: #333;
 }
 
@@ -34,6 +34,7 @@ nav button {
     padding: 10px;
     cursor: pointer;
     transition: 0.3s;
+    
 }
 
 nav button.active,
@@ -215,4 +216,56 @@ nav button.active {
     top: 10px;
     cursor: pointer;
     font-size: 20px;
+}
+@media (min-width: 768px) {
+    /* Desactivar el límite de ancho para escritorios */
+    .app-container {
+        max-width: none;
+        padding: 50px;
+        display: grid;
+        grid-template-columns: 1fr 2fr; /* Ejemplo: una columna para la navegación y otra para el contenido */
+        gap: 40px;
+        align-items: start;
+    }
+
+    /* Estilos de navegación para escritorio */
+    header {
+        text-align: left;
+    }
+
+    nav {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-top: 0;
+    }
+
+    nav button {
+        flex: none;
+        width: 100%;
+        text-align: left;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+
+    /* Alinear las tarjetas en un diseño de dos columnas */
+    .main-content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .card {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info p {
+        margin: 5px 0;
+    }
 }
