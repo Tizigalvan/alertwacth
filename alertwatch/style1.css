@@ -1,0 +1,298 @@
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: #333;
+}
+
+/* Contenedor principal */
+.app-container {
+    width: 90%;
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Estilos para el encabezado */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header img {
+    width: 140px;
+    height: 140px;
+}
+
+header p {
+    font-size: 20px;
+    color: #333;
+}
+
+/* Navegación */
+nav {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 30px;
+}
+
+nav a {
+    text-decoration: none;
+    flex-grow: 1;
+}
+
+nav button {
+    width: 100%;
+    background: #eee;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 8px;
+}
+
+nav button.active,
+nav button:hover {
+    background: #ff5ca5;
+    color: white;
+}
+
+/* Estilos para los recordatorios */
+.reminders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.add-btn {
+    background-color: #e60073;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background-color: #cc0066;
+}
+
+/* Contenedor del Carrusel */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    padding: 0 40px;
+}
+
+.carousel-slides {
+    display: flex;
+    gap: 15px;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    min-width: 90%;
+    flex-shrink: 0;
+}
+
+/* Estilos de la tarjeta */
+.reminder-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.reminder-card h4 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.reminder-card p {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.no-reminders {
+    text-align: center;
+    font-size: 18px;
+    color: #888;
+}
+
+/* Estilo para los botones de navegación */
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 100;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    display: block;
+}
+
+.carousel-button.prev {
+    left: 0;
+}
+
+.carousel-button.next {
+    right: 40px;
+}
+
+.carousel-button.hidden {
+    display: none;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 40px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: red;
+}
+
+form label {
+    display: block;
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+form input, form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+form button {
+    margin-top: 25px;
+    background-color: #e60073;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #cc0066;
+}
+
+/* Media Query para dispositivos móviles y tabletas */
+@media (max-width: 768px) {
+    /* Ajustes para el contenedor principal */
+    .app-container {
+        width: 100%;
+        padding: 15px;
+    }
+    
+    /* Ajustes para el encabezado */
+    header img {
+        width: 100px;
+        height: 100px;
+    }
+
+    header p {
+        font-size: 16px;
+    }
+
+    /* Ajustes para la navegación */
+    nav {
+        align-items: center;
+        gap: 10px;
+    }
+    
+    nav a {
+        width: 100%;
+    }
+    
+    nav button {
+        padding: 15px;
+    }
+
+    /* Ajustes para los recordatorios */
+    .reminders-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .carousel-container {
+        padding: 0 20px;
+    }
+
+    .carousel-item {
+        min-width: 100%;
+    }
+
+    /* Ajustes para los botones de navegación del carrusel */
+    .carousel-button {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+    }
+    
+    .carousel-button.prev {
+        left: 5px;
+    }
+
+    .carousel-button.next {
+        right: 5px;
+    }
+
+    /* Ajustes para el modal */
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 20px;
+    }
+    
+    .close {
+        font-size: 24px;
+    }
+}

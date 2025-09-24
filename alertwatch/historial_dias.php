@@ -1,36 +1,27 @@
 <?php
 session_start();
-include 'conexion.php';
+include 'conexion.php'; // Incluye el archivo de conexión a tu base de datos
 
-// Obtener historial del día actual (desde la sesión)
-$historial_sesion = $_SESSION['historial'] ?? [];
+// Consulta para obtener todos los registros del historial diario
+$sql = "SELECT fecha, min_bpm, max_bpm, promedio_bpm FROM historial_diario ORDER BY fecha DESC";
+$resultado = $conn->query($sql);
 
-// Obtener historial de días anteriores (desde la base de datos)
-$sql_historial_db = "SELECT fecha, min_bpm, max_bpm, promedio_bpm FROM historial_diario ORDER BY fecha DESC";
-$result_historial_db = $conn->query($sql_historial_db);
-$historial_db = $result_historial_db->fetch_all(MYSQLI_ASSOC);
-
-// Calcular estadísticas del día actual (para las tarjetas del historial)
-$valores_hoy = array_column($historial_sesion, 'bpm');
-$minimo_hoy = count($valores_hoy) ? min($valores_hoy) : 0;
-$maximo_hoy = count($valores_hoy) ? max($valores_hoy) : 0;
-$promedio_hoy = count($valores_hoy) ? round(array_sum($valores_hoy) / count($valores_hoy)) : 0;
+$historial_dias_anteriores = [];
+if ($resultado && $resultado->num_rows > 0) {
+    while ($fila = $resultado->fetch_assoc()) {
+        $historial_dias_anteriores[] = $fila;
+    }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Historial - AlertWatch</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial Diario - AlertWatch</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div class="app-container">
-    <header>
-        <img src="logoalertorigi.jpeg" alt="Logo de AlertWatch" style="width: 140px; height: 140px;">
-        <p>Tu salud cardíaca bajo control</p>
-        <style>
+   <style>
 /* ... (Se mantienen los estilos existentes para móviles) ... */
 
 body {
@@ -41,7 +32,7 @@ body {
 }
 nav button {
     /* ... otros estilos ... */
-    border-radius: 8px;
+    border-radius: 12px;
 }
 .app-container {
     max-width: 400px;
@@ -342,40 +333,37 @@ nav button.active {
     }
 }
 </style>
+</head>
+<body>
+<div class="app-container">
+    <header>
+        <img src="logoalertorigi.jpeg" alt="Logo de AlertWatch" style="width: 140px; height: 140px;">
+        <p>Tu salud cardíaca bajo control</p>
     </header>
 
     <nav>
         <a href="index.php"><button>Monitor</button></a>
         <a href="medicinas.php"><button>Medicinas</button></a>
-        <a href="historial.php"><button class="active">Historial</button></a>
-        <a href="historial_dias.php"><button>Historial diario</button></a>
+        <a href="historial.php"><button>Historial</button></a>
+        <a href="historial_dias.php"><button class="active">Historial diario</button></a>
         <a href="config.php"><button>Config</button></a>
     </nav>
 
     <main>
-        <h3>Historial de Hoy</h3>
-        <div class="stats">
-            <div class="stat">
-                <p>Mínimo Hoy</p>
-                <h3 class="green"><?= $minimo_hoy ?></h3>
-            </div>
-            <div class="stat">
-                <p>Promedio</p>
-                <h3 class="blue"><?= $promedio_hoy ?></h3>
-            </div>
-            <div class="stat">
-                <p>Máximo Hoy</p>
-                <h3 class="red"><?= $maximo_hoy ?></h3>
-            </div>
-        </div>
-
+        <h3>Historial de Días Anteriores</h3>
         <div class="history-list">
-            <h4>Lecturas Recientes</h4>
-            <div class="scrollable">
-                <?php foreach (array_reverse($historial_sesion) as $lectura): ?>
-                    <p><?= $lectura['hora'] ?> <span style="color: green; float:right;"><?= $lectura['bpm'] ?> BPM</span></p>
+            <?php if (empty($historial_dias_anteriores)): ?>
+                <p style="text-align: center; color: #555;">No hay datos de días anteriores guardados. Comienza a usar el monitor para generar historial.</p>
+            <?php else: ?>
+                <?php foreach ($historial_dias_anteriores as $dia): ?>
+                    <div class="history-entry">
+                        <h4><?= htmlspecialchars($dia['fecha']) ?></h4>
+                        <p><strong>Mínimo:</strong> <span class="stat-value"><?= htmlspecialchars($dia['min_bpm']) ?> BPM</span></p>
+                        <p><strong>Promedio:</strong> <span class="stat-value"><?= htmlspecialchars($dia['promedio_bpm']) ?> BPM</span></p>
+                        <p><strong>Máximo:</strong> <span class="stat-value"><?= htmlspecialchars($dia['max_bpm']) ?> BPM</span></p>
+                     </div>
                 <?php endforeach; ?>
-            </div>
+            <?php endif; ?>
         </div>
     </main>
 </div>
